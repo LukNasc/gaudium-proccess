@@ -51,7 +51,10 @@ public class UserActivity extends AppCompatActivity implements ProfileWebService
     @Override
     public void run(DadosEntregador.Response response) {
         txtNome.setText(response.getNome());
-        Glide.with(this).load(response.getFoto()).into(imageProfile);
+
+        //Setando uma imagem da API para a imageView
+        if (response.getFoto() != null)
+            Glide.with(this).load(response.getFoto()).into(imageProfile);
         mountList(response.getHistorico());
 
     }
@@ -66,7 +69,7 @@ public class UserActivity extends AppCompatActivity implements ProfileWebService
 
     @Override
     public void atualizaSaldo(float value) {
-        txtSaldo.setText("Saldo: R$ "+ Util.addCommaPointer(String.valueOf(value)));
+        txtSaldo.setText("Saldo: R$ " + Util.addCommaPointer(String.valueOf(value)));
     }
 
     @Override
