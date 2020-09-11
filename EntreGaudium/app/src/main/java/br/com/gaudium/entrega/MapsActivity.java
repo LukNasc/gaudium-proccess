@@ -50,6 +50,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //Local da cleta
     Marker collectMrker;
 
+    //Loca de entrega atual
+    Marker currentDellivey;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -304,6 +307,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             ofertaWS.obterPedido(this, oferta -> {
                 if (oferta == null) return;
                 entregadorObj.setPedido(oferta);
+
+                if (currentDellivey != null)
+                    currentDellivey.remove();
+
                 entregadorObj.setStatus(StatusEntregadorEnum.DECIDINDO);
                 Util.tocarSomVibrar(MapsActivity.this);
 
@@ -327,12 +334,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
             //Removendo Markers
-            for (Marker marker: lstMarker) {
-                   marker.remove();
+            for (Marker marker : lstMarker) {
+                marker.remove();
             }
 
             if (mMap == null) return;
-                collectMrker = mMap.addMarker(new MarkerOptions().position(entregadorObj.getPedido().getLatLng()).icon(Util.bitmapDescriptorFromVector(this, R.drawable.pin_loja)));
+            collectMrker = mMap.addMarker(new MarkerOptions().position(entregadorObj.getPedido().getLatLng()).icon(Util.bitmapDescriptorFromVector(this, R.drawable.pin_loja)));
 
 
             //Mover usuário
@@ -349,6 +356,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Toast.makeText(this, R.string.toast_endereco_entrega, Toast.LENGTH_SHORT).show();
                     return;
                 }
+
+                //Removendo ponto de coleta
+                collectMrker.remove();
+
+                //Adicionando ponto de entrega
+                if (currentDellivey == null)
+                    currentDellivey = mMap.addMarker(new MarkerOptions().position(entrega.getLatLng()).icon(Util.bitmapDescriptorFromVector(this, R.drawable.pin_entrega)));
+                else
+                    currentDellivey.setPosition(entrega.getLatLng());
 
                 //Mover usuário
                 dLocRet.setLatLng(entrega.getLat(), entrega.getLng());
