@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">EntreGaudium</string>
+    <string name="title_activity_maps">EntreGaudium</string>
+    <string name="toast_entrega_finalizada">Entrega finalizada!</string>
+    <string name="toast_endereco_coleta">Você já está no endereço de coleta</string>
+    <string name="toast_endereco_entrega">Você já está no endereço de entrega</string>
+    <string name="debug_button_receber_pedido">Receber pedido</string>
+    <string name="debug_button_endereco_coleta">Ir para endereço de coleta</string>
+    <string name="debug_button_endereco_entrega">Ir para endereço de entrega</string>
+    <string name="va_ate_endereco_entrega_id">Vá até o endereço da entrega %1$s</string>
+    <string name="button_coletar">Coletar produto</string>
+    <string name="button_entregar">Entregar produto</string>
+    <string name="button_oferta_aceitar">Aceitar</string>
+    <string name="button_oferta_rejeitar">Rejeitar</string>
+    <string name="label_endereco_entrega">Vá até o endereço</string>
+    <string name="label_endereco_coleta">Local de coleta</string>
+</resources>

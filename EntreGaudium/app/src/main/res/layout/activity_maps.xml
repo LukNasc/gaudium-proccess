@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:map="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".MapsActivity" />
+
+    <RelativeLayout
+        android:id="@+id/layMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <!--  Menu para o momento DECIDINDO  -->
+        <LinearLayout
+            style="@style/MenuPedido"
+            android:id="@+id/layMenuOferta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#FFFFFF"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txtLocalColetaLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#3A3A3A"
+                android:text="@string/label_endereco_coleta"/>
+
+            <TextView
+                android:id="@+id/txtEnderecoOferta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#222"
+                android:layout_marginBottom="12dp"
+                tools:text="Rua da Assembéia, 10 - Centro"/>
+
+            <!-- Espaço com botões do menu do momento DECIDINDO -->
+            <RelativeLayout
+                style="MenuLayButton"
+                android:id="@+id/layOpcoes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnRejeitar"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:backgroundTint="#E95252"
+                    android:textColor="#FFFFFF"
+                    android:text="@string/button_oferta_rejeitar" />
+
+                <Button
+                    android:id="@+id/btnAceitar"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentEnd="true"
+                    android:backgroundTint="#2DC935"
+                    android:textColor="#FFFFFF"
+                    android:text="@string/button_oferta_aceitar"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+        <!--  Menu para o momento COLETANDO -->
+        <LinearLayout
+            style="@style/MenuPedido"
+            android:id="@+id/layMenuColeta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F3F3D3"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txtColetaLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:textColor="#3A3A3A"
+                android:text="@string/label_endereco_coleta"/>
+
+            <TextView
+                android:id="@+id/txtEnderecoColeta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#222"
+                android:layout_marginBottom="12dp"
+                tools:text="Rua da Assembéia, 10, Centro, RJ"/>
+
+            <!-- Espaço com botões do menu do momento COLETANDO -->
+            <RelativeLayout
+                style="MenuLayButton"
+                android:id="@+id/layColetaButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnColetar"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="@string/button_coletar"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <!--  Menu para o momento ENTREGANDO -->
+        <LinearLayout
+            style="@style/MenuPedido"
+            android:id="@+id/layMenuEntrega"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#D4F3D4"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/txtEntrega"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:textColor="#222"
+                android:layout_marginBottom="12dp"
+                tools:text="Vá até o endereço do pedido #1"/>
+
+            <!-- Espaço com botões do menu do momento ENTREGANDO -->
+            <RelativeLayout
+                style="MenuLayButton"
+                android:id="@+id/layEntregaButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/btnEntregar"
+                    android:layout_width="300dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/button_entregar" />
+            </RelativeLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <!-- Botão para DEBUG -->
+    <Button
+        android:id="@+id/btnDebugAction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/layMenu"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="8dp"
+        android:backgroundTint="#FFDD5D"
+        android:drawableTop="@drawable/ic_bug"
+        android:text="Solicitar pedido"/>
+</RelativeLayout>
