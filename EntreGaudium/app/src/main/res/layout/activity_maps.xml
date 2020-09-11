@@ -184,4 +184,23 @@
         android:backgroundTint="#FFDD5D"
         android:drawableTop="@drawable/ic_bug"
         android:text="Solicitar pedido"/>
+
+    <Button
+        android:id="@+id/btnGoProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="67dp"
+        android:layout_above="@id/layMenu"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="26dp"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="241dp"
+        android:layout_marginRight="241dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="#FFDD5D"
+        android:text="Ir para o perfil" />
+
 </RelativeLayout>

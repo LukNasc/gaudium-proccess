@@ -5,7 +5,6 @@ import android.content.Context;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.gaudium.entrega.interfaces.PedidosInterface;
 import br.com.gaudium.entrega.model.PedidoJsonObj;
 import br.com.gaudium.entrega.view.MapsActivityView;
 import retrofit2.Call;
@@ -42,7 +41,7 @@ public class OfertaPedidoWebService {
 		p.setEntrega(destino);
 
 		//Montando objeto para requisição a API
-		Call<PedidoJsonObj> call = new RetrofitConfig(view, ctx).getService().call();
+		Call<PedidoJsonObj> call = new RetrofitConfig(ctx).getServicePedidos().callPedidos("ofertaPedido.php");
 
 		//Fazendo chamada a API
 		call.enqueue(new Callback<PedidoJsonObj>() {

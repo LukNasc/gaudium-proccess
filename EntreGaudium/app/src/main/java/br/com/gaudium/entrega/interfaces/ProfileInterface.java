@@ -6,10 +6,8 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 
-public interface PedidosInterface {
+public interface ProfileInterface {
 
     @GET("/ps/{endpoint}")
-    Call<PedidoJsonObj> callPedidos(@Path("endpoint")String  endpoint);
-
-
+    Call<DadosEntregador> callProfile(@Path("endpoint")String  endpoint);
 }

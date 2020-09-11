@@ -17,6 +17,10 @@ import androidx.core.content.ContextCompat;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
+import java.math.BigDecimal;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Util {
 	public static BitmapDescriptor bitmapDescriptorFromVector(Context context, int vectorResId) {
 		Drawable vectorDrawable = ContextCompat.getDrawable(context, vectorResId);
@@ -50,5 +54,23 @@ public class Util {
 	public static void playCompleted(Context ctx){
 		MediaPlayer mPlayer = MediaPlayer.create(ctx, R.raw.completed);
 		mPlayer.start();
+	}
+
+	//Formata texto para R$ dinhero
+
+	public static String addCommaPointer(String valor) {
+		Locale ptBr = new Locale("pt", "BR");
+		BigDecimal parsed = parseToBigDecimal(valor, ptBr);
+		return NumberFormat.getCurrencyInstance(ptBr).format(parsed).replaceAll("[R]", "").replaceAll("[$]", "");
+	}
+
+	//Auxilia o formatador para valores maiores
+
+	private static BigDecimal parseToBigDecimal(String value, Locale locale) {
+		String replaceable = String.format("[%s,.\\s]", NumberFormat.getCurrencyInstance(locale).getCurrency().getSymbol());
+		String cleanString = value.replaceAll(replaceable, "");
+		return new BigDecimal(cleanString).setScale(
+				2, BigDecimal.ROUND_FLOOR).divide(new BigDecimal(100), BigDecimal.ROUND_FLOOR
+		);
 	}
 }

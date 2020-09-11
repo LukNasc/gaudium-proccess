@@ -2,6 +2,7 @@ package br.com.gaudium.entrega;
 
 import androidx.fragment.app.FragmentActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
@@ -34,7 +35,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LinearLayout layMenuOferta, layMenuColeta, layMenuEntrega;
     private RelativeLayout layColetaButton, layEntregaButton, layMenu;
     private TextView txtEnderecoOferta, txtEnderecoColeta, txtEntrega, txtEntregas, txtEnderecoEntrega;
-    private Button btnRejeitar, btnAceitar, btnColetar, btnEntregar, btnDebugAction;
+    private Button btnRejeitar, btnAceitar, btnColetar, btnEntregar, btnDebugAction, btnGoProfile;
 
     Handler handler;
 
@@ -65,6 +66,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         handler = new Handler();
         layMenu = findViewById(R.id.layMenu);
+
+        btnGoProfile = findViewById(R.id.btnGoProfile);
+        btnGoProfile.setOnClickListener(view -> startActivity(new Intent(this, UserActivity.class)));
 
         // Menu de Oferta
         layMenuOferta = findViewById(R.id.layMenuOferta);

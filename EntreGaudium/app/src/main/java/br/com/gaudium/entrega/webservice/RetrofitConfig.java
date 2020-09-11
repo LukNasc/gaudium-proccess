@@ -6,6 +6,7 @@ import android.view.View;
 
 import br.com.gaudium.entrega.R;
 import br.com.gaudium.entrega.interfaces.PedidosInterface;
+import br.com.gaudium.entrega.interfaces.ProfileInterface;
 import br.com.gaudium.entrega.model.PedidoJsonObj;
 import br.com.gaudium.entrega.view.MapsActivityView;
 import retrofit2.Call;
@@ -17,7 +18,7 @@ public class RetrofitConfig {
     MapsActivityView view;
     private static final String TAG = "retrofit_error";
 
-    public RetrofitConfig(MapsActivityView view, Context context){
+    public RetrofitConfig(Context context){
         this.view = view;
         try{
             this.retrofit = new Retrofit.Builder()
@@ -25,17 +26,17 @@ public class RetrofitConfig {
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }catch (Exception e){
-            view.showToast(context.getResources().getString (R.string.general_error));
             Log.e(TAG, e.getMessage());
         }
     }
 
 
-    public PedidosInterface getService(){
+    public PedidosInterface getServicePedidos(){
         return this.retrofit.create(PedidosInterface.class);
     }
 
-    public Call<PedidoJsonObj> call(String endpoint){
-        return null;
+    public ProfileInterface getServiceProfile(){
+        return this.retrofit.create(ProfileInterface.class);
     }
+
 }

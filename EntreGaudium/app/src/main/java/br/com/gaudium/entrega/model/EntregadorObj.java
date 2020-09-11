@@ -5,6 +5,7 @@ public class EntregadorObj {
 
 	private StatusEntregadorEnum status;
 	private PedidoJsonObj.PedidoObj pedido;
+	private DadosEntregador dadosEntregador;
 
 	public EntregadorObj(){
 		status = StatusEntregadorEnum.DISPONIVEL;
