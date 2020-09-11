@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,7 +38,7 @@ public class UserActivity extends AppCompatActivity implements ProfileWebService
         recyclerView = findViewById(R.id.rvHistoric);
 
 
-        ProfileWebService profileWebService = new ProfileWebService();
+        ProfileWebService profileWebService = new ProfileWebService(this);
         profileWebService.obterDadosEntregador(this, this);
 
     }
@@ -60,5 +61,10 @@ public class UserActivity extends AppCompatActivity implements ProfileWebService
     @Override
     public void atualizaSaldo(float value) {
         txtSaldo.setText("Saldo: R$ "+ Util.addCommaPointer(String.valueOf(value)));
+    }
+
+    @Override
+    public void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }
