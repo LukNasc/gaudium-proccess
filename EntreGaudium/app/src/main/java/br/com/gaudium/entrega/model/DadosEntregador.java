@@ -15,6 +15,7 @@ public class DadosEntregador {
 
     public class Response{
         private String nome;
+        private String foto;
         private List<Historico> historico;
 
         public String getNome() {
@@ -31,6 +32,14 @@ public class DadosEntregador {
 
         public void setHistorico(List<Historico> historico) {
             this.historico = historico;
+        }
+
+        public String getFoto() {
+            return foto;
+        }
+
+        public void setFoto(String foto) {
+            this.foto = foto;
         }
     }
 }

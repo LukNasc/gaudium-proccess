@@ -161,6 +161,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             userMarker.setPosition(dLocRet.getLatLng());
         }
 
+        if(StatusEntregadorEnum.DISPONIVEL.equalsEnum(entregadorObj.getStatus())){
+            //Removendo Markers
+            for (Marker marker : lstMarker) {
+                marker.remove();
+            }
+        }
+
         mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(userMarker.getPosition(), 14f));
     }
 
@@ -312,8 +319,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (oferta == null) return;
                 entregadorObj.setPedido(oferta);
 
+                //Removendo marker de entrega
                 if (currentDellivey != null)
                     currentDellivey.remove();
+
+
 
                 entregadorObj.setStatus(StatusEntregadorEnum.DECIDINDO);
                 Util.tocarSomVibrar(MapsActivity.this);

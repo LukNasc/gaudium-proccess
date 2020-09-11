@@ -1,9 +1,11 @@
 package br.com.gaudium.entrega;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -11,6 +13,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +28,7 @@ public class UserActivity extends AppCompatActivity implements ProfileWebService
 
     private TextView txtNome, txtSaldo;
     private RecyclerView recyclerView;
+    private ImageView imageProfile;
 
     private AdapterProfileUser adapterProfileUser;
 
@@ -36,7 +41,7 @@ public class UserActivity extends AppCompatActivity implements ProfileWebService
         txtNome = findViewById(R.id.txtName);
         txtSaldo = findViewById(R.id.txtSaldo);
         recyclerView = findViewById(R.id.rvHistoric);
-
+        imageProfile = findViewById(R.id.ivProfile);
 
         ProfileWebService profileWebService = new ProfileWebService(this);
         profileWebService.obterDadosEntregador(this, this);
@@ -46,6 +51,7 @@ public class UserActivity extends AppCompatActivity implements ProfileWebService
     @Override
     public void run(DadosEntregador.Response response) {
         txtNome.setText(response.getNome());
+        Glide.with(this).load(response.getFoto()).into(imageProfile);
         mountList(response.getHistorico());
 
     }
