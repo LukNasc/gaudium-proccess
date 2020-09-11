@@ -21,12 +21,14 @@ public class OfertaPedidoWebService {
 	}
 
 	public void obterPedido(Context ctx, OfertaPedidoCallback callback){
-		//TODO: Trocar pedido hard-coded por chamada ao backend
+
+		//Montando objeto de Pedidos
 		PedidoJsonObj.PedidoObj p = new PedidoJsonObj.PedidoObj();
 		p.setLat_coleta(p.getLat_coleta());
 		p.setLng_coleta(p.getLng_coleta());
 		p.setEndereco_coleta(p.getEndereco_coleta());
 
+		//Montando objeto de entrega
 		List<PedidoJsonObj.EntregaObj>  lstDestino = new ArrayList<>();
 		PedidoJsonObj.EntregaObj[] destino = new PedidoJsonObj.EntregaObj[0];
 		if(p.getEntregas() != null){
@@ -36,17 +38,23 @@ public class OfertaPedidoWebService {
 			destino = (PedidoJsonObj.EntregaObj[]) lstDestino.toArray();
 
 		}
+		//Adicionando entrega aos pedidos
 		p.setEntrega(destino);
 
+		//Montando objeto para requisição a API
 		Call<PedidoJsonObj> call = new RetrofitConfig(view, ctx).getService().call();
+
+		//Fazendo chamada a API
 		call.enqueue(new Callback<PedidoJsonObj>() {
 			@Override
 			public void onResponse(Call<PedidoJsonObj> call, Response<PedidoJsonObj> response) {
+				//Executando callBack enviando os dados retornados dos serviço
 				callback.run(response.body().getResponse());
 			}
 
 			@Override
 			public void onFailure(Call<PedidoJsonObj> call, Throwable t) {
+				//Caso aconteça algum erro, o usuário é notifiado na tela
 				view.showToast("Erro ao obter pedido: "+t.getMessage());
 			}
 		});
