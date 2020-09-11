@@ -18,6 +18,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import br.com.gaudium.entrega.model.DebugLocationRetriever;
 import br.com.gaudium.entrega.model.EntregadorObj;
 import br.com.gaudium.entrega.model.PedidoJsonObj;
@@ -39,6 +42,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     DebugLocationRetriever dLocRet;
     EntregadorObj entregadorObj;
     Marker userMarker;
+
+
+    //Locais de entrega
+    List<Marker> lstMarker = new ArrayList<>();
+
+    //Local da cleta
+    Marker collectMrker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,9 +127,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         showMenuColeta(StatusEntregadorEnum.COLETANDO.equalsEnum(entregadorObj.getStatus()));
         showMenuEntrega(StatusEntregadorEnum.ENTREGANDO.equalsEnum(entregadorObj.getStatus()));
 
-        if(StatusEntregadorEnum.ENTREGANDO.equalsEnum(entregadorObj.getStatus())){
+        if (StatusEntregadorEnum.ENTREGANDO.equalsEnum(entregadorObj.getStatus())) {
             PedidoJsonObj.EntregaObj e = entregadorObj.getPedido().getEntregaAtual();
-            if(e != null) {
+            if (e != null) {
                 txtEntrega.setText(String.format(getString(R.string.va_ate_endereco_entrega_id), e.getId()));
             }
         }
@@ -136,11 +146,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }, 300);
     }
 
-    private void updateMapMarkers(){
-        if(mMap == null) return;
-        if(userMarker == null) {
+    private void updateMapMarkers() {
+        if (mMap == null) return;
+        if (userMarker == null) {
             userMarker = mMap.addMarker(new MarkerOptions().position(dLocRet.getLatLng()).icon(Util.bitmapDescriptorFromVector(this, R.drawable.pin_user_white)));
-        } else{
+        } else {
             userMarker.setPosition(dLocRet.getLatLng());
         }
 
@@ -184,7 +194,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     private void onDeliver() {
         entregadorObj.getPedido().getEntregaAtual().setEntregue(true);
-        if(entregadorObj.getPedido().getEntregaAtual() == null){
+        if (entregadorObj.getPedido().getEntregaAtual() == null) {
             //FINALIZAR
             entregadorObj.setStatus(StatusEntregadorEnum.DISPONIVEL);
             Toast.makeText(this, R.string.toast_entrega_finalizada, Toast.LENGTH_SHORT).show();
@@ -197,13 +207,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     /**
      * Método que controla a exibição do menu que exibe a oferta do pedido, com as opções de Aceitar ou Rejeitar
+     *
      * @param visible true/false
      */
-    public void showMenuOferta(boolean visible){
-        layMenuOferta.setVisibility(visible?View.VISIBLE:View.GONE);
+    public void showMenuOferta(boolean visible) {
+        layMenuOferta.setVisibility(visible ? View.VISIBLE : View.GONE);
         if (entregadorObj.getPedido() != null) {
             //Exibe a quantidade de entregas
-            txtEntregas.setText("Entregas: "+entregadorObj.getPedido().getEntregas().length);
+            txtEntregas.setText("Entregas: " + entregadorObj.getPedido().getEntregas().length);
             txtEnderecoOferta.setText(entregadorObj.getPedido().getEndereco_coleta());
         }
     }
@@ -211,10 +222,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /**
      * Método que controla a exibição do menu que exibe onde o pedido deve ser coletado. Se o entregador estiver
      * próximo do local, um botão para avançar para a próxima etapa será exibido
+     *
      * @param visible indica se deve exibir ou não o menu
      */
-    public void showMenuColeta(boolean visible){
-        layMenuColeta.setVisibility(visible?View.VISIBLE:View.GONE);
+    public void showMenuColeta(boolean visible) {
+        layMenuColeta.setVisibility(visible ? View.VISIBLE : View.GONE);
         if (entregadorObj.getPedido() != null) {
             txtEnderecoColeta.setText(entregadorObj.getPedido().getEndereco_coleta());
 
@@ -226,10 +238,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     /**
      * Método que controla a exibição do menu que contém os dados de onde o pedido deve entregue. Se o entregador estiver
      * próximo do local de entrega, um botão para avançar para o próximo pedido até encerrar o pedido
+     *
      * @param visible indica se deve exibir ou não o menu
      */
-    public void showMenuEntrega(boolean visible){
-        layMenuEntrega.setVisibility(visible?View.VISIBLE:View.GONE);
+    public void showMenuEntrega(boolean visible) {
+        layMenuEntrega.setVisibility(visible ? View.VISIBLE : View.GONE);
         if (entregadorObj.getPedido() != null && entregadorObj.getPedido().getEntregaAtual() != null) {
             PedidoJsonObj.EntregaObj entrega = entregadorObj.getPedido().getEntregaAtual();
             //Exibe o endereco da entrega
@@ -240,26 +253,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-
     // - - - - - - - - Métodos auxiliares para botão de debug - - - - - - - -
 
     /**
      * Controla a exibição do botão de debug de acordo com o momento da entrega
      */
-    private void updateDebugButton(){
+    private void updateDebugButton() {
         // Exibe o botão para forçar o recebimento de um pedido de entrega
-        if (StatusEntregadorEnum.DISPONIVEL.equalsEnum(entregadorObj.getStatus())){
+        if (StatusEntregadorEnum.DISPONIVEL.equalsEnum(entregadorObj.getStatus())) {
             btnDebugAction.setText(R.string.debug_button_receber_pedido);
             btnDebugAction.setVisibility(View.VISIBLE);
         }
 
         // Enquanto decide o botão não deve ser exibido
-        if (StatusEntregadorEnum.DECIDINDO.equalsEnum(entregadorObj.getStatus()) && entregadorObj.getPedido() != null){
+        if (StatusEntregadorEnum.DECIDINDO.equalsEnum(entregadorObj.getStatus()) && entregadorObj.getPedido() != null) {
             btnDebugAction.setVisibility(View.GONE);
         }
 
         // Exibe o botão para mover o usuário até o endereço de coleta
-        if (StatusEntregadorEnum.COLETANDO.equalsEnum(entregadorObj.getStatus())){
+        if (StatusEntregadorEnum.COLETANDO.equalsEnum(entregadorObj.getStatus())) {
             btnDebugAction.setText(R.string.debug_button_endereco_coleta);
 
             // Exibe botão apenas quando tiver longe do endereço de coleta
@@ -267,7 +279,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         // Exibe o botão para mover o usuário até o endereço de entrega
-        if (StatusEntregadorEnum.ENTREGANDO.equalsEnum(entregadorObj.getStatus())){
+        if (StatusEntregadorEnum.ENTREGANDO.equalsEnum(entregadorObj.getStatus())) {
             btnDebugAction.setText(R.string.debug_button_endereco_entrega);
             btnDebugAction.setVisibility(View.VISIBLE);
             PedidoJsonObj.EntregaObj entrega = entregadorObj.getPedido().getEntregaAtual();
@@ -283,27 +295,44 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
     private void onDebugAction() {
         //Enquanto estiver no momento DISPONÍVEL, o botão irá forçar o recebimento de um pedido
-        if (StatusEntregadorEnum.DISPONIVEL.equalsEnum(entregadorObj.getStatus())){
-            if(ofertaWS == null) {
+        if (StatusEntregadorEnum.DISPONIVEL.equalsEnum(entregadorObj.getStatus())) {
+            if (ofertaWS == null) {
                 ofertaWS = new OfertaPedidoWebService(this);
             }
 
             //Acionar serviço para obter pedido
             ofertaWS.obterPedido(this, oferta -> {
-                if(oferta == null) return;
+                if (oferta == null) return;
                 entregadorObj.setPedido(oferta);
                 entregadorObj.setStatus(StatusEntregadorEnum.DECIDINDO);
                 Util.tocarSomVibrar(MapsActivity.this);
+
+                //Exibir locais de entrega
+                if (mMap == null) return;
+                lstMarker.clear();
+                for (PedidoJsonObj.EntregaObj entrega : entregadorObj.getPedido().getEntregas()) {
+                    lstMarker.add(mMap.addMarker(new MarkerOptions().position(entrega.getLatLng()).icon(Util.bitmapDescriptorFromVector(this, R.drawable.pin_loja))));
+                }
+
                 updateScreen();
             });
+
         }
 
         //Enquanto estiver no momento COLETANDO, o botão irá locomover o usuário até o endereço de coleta do pedido aceito
-        if (StatusEntregadorEnum.COLETANDO.equalsEnum(entregadorObj.getStatus())){
-            if(dLocRet.getLatLng().equals(entregadorObj.getPedido().getLatLng())){    //Se já está no endereço, exibe um aviso
+        if (StatusEntregadorEnum.COLETANDO.equalsEnum(entregadorObj.getStatus())) {
+            if (dLocRet.getLatLng().equals(entregadorObj.getPedido().getLatLng())) {    //Se já está no endereço, exibe um aviso
                 Toast.makeText(this, R.string.toast_endereco_entrega, Toast.LENGTH_SHORT).show();
                 return;
             }
+
+            //Removendo Markers
+            for (Marker marker: lstMarker) {
+                   marker.remove();
+            }
+
+            if (mMap == null) return;
+                collectMrker = mMap.addMarker(new MarkerOptions().position(entregadorObj.getPedido().getLatLng()).icon(Util.bitmapDescriptorFromVector(this, R.drawable.pin_loja)));
 
 
             //Mover usuário
@@ -312,11 +341,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
         //Enquanto estiver no momento ENTREGANDO, o botão irá locomover o usuário até o endereço de entrega do pedido aceito
-        if (StatusEntregadorEnum.ENTREGANDO.equalsEnum(entregadorObj.getStatus())){
+        if (StatusEntregadorEnum.ENTREGANDO.equalsEnum(entregadorObj.getStatus())) {
             PedidoJsonObj.EntregaObj entrega = entregadorObj.getPedido().getEntregaAtual();
 
             if (entrega != null) {
-                if(dLocRet.getLatLng().equals(entrega.getLatLng())){    //Se já está no endereço, exibe um aviso
+                if (dLocRet.getLatLng().equals(entrega.getLatLng())) {    //Se já está no endereço, exibe um aviso
                     Toast.makeText(this, R.string.toast_endereco_entrega, Toast.LENGTH_SHORT).show();
                     return;
                 }
