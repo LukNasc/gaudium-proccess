@@ -131,8 +131,8 @@
 
         <!--  Menu para o momento ENTREGANDO -->
         <LinearLayout
-            style="@style/MenuPedido"
             android:id="@+id/layMenuEntrega"
+            style="@style/MenuPedido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#D4F3D4"
@@ -143,15 +143,21 @@
                 android:id="@+id/txtEntrega"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="#222"
                 android:layout_marginBottom="12dp"
-                tools:text="Vá até o endereço do pedido #1"/>
+                android:textColor="#222"
+                android:textSize="16sp"
+                tools:text="Vá até o endereço do pedido #1" />
 
             <!-- Espaço com botões do menu do momento ENTREGANDO -->
+            <TextView
+                android:id="@+id/txtEnderecoEntrega"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Rua Exemplo" />
+
             <RelativeLayout
-                style="MenuLayButton"
                 android:id="@+id/layEntregaButton"
+                style="MenuLayButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
