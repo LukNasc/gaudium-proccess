@@ -14,4 +14,5 @@
     <string name="button_oferta_rejeitar">Rejeitar</string>
     <string name="label_endereco_entrega">Vá até o endereço</string>
     <string name="label_endereco_coleta">Local de coleta</string>
+    <string name="general_error">"Ocorreu um erro desconhecido "</string>
 </resources>

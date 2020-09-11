@@ -22,9 +22,10 @@ import br.com.gaudium.entrega.model.DebugLocationRetriever;
 import br.com.gaudium.entrega.model.EntregadorObj;
 import br.com.gaudium.entrega.model.PedidoJsonObj;
 import br.com.gaudium.entrega.model.StatusEntregadorEnum;
+import br.com.gaudium.entrega.view.MapsActivityView;
 import br.com.gaudium.entrega.webservice.OfertaPedidoWebService;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, MapsActivityView {
 
     private GoogleMap mMap;
     private LinearLayout layMenuOferta, layMenuColeta, layMenuEntrega;
@@ -279,7 +280,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //Enquanto estiver no momento DISPONÍVEL, o botão irá forçar o recebimento de um pedido
         if (StatusEntregadorEnum.DISPONIVEL.equalsEnum(entregadorObj.getStatus())){
             if(ofertaWS == null) {
-                ofertaWS = new OfertaPedidoWebService();
+                ofertaWS = new OfertaPedidoWebService(this);
             }
 
             //Acionar serviço para obter pedido
@@ -320,5 +321,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 updateScreen();
             }
         }
+    }
+
+    @Override
+    public void showToast(String msg) {
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
     }
 }

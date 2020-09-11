@@ -2,6 +2,8 @@ package br.com.gaudium.entrega.model;
 
 import com.google.android.gms.maps.model.LatLng;
 
+import retrofit2.Response;
+
 public class PedidoJsonObj {
 	private String success;
 	private PedidoObj response;
@@ -64,6 +66,13 @@ public class PedidoJsonObj {
 		public LatLng getLatLng() {
 			return new LatLng(lat_coleta, lng_coleta);
 		}
+
+
+		//Código para montagem dos dados vindos da API
+		public PedidoJsonObj mountObject(Response<PedidoJsonObj> response){
+			return 	response.body();
+		}
+
 	}
 
 	public static class EntregaObj {

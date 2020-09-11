@@ -2,39 +2,54 @@ package br.com.gaudium.entrega.webservice;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.gaudium.entrega.interfaces.PedidosInterface;
 import br.com.gaudium.entrega.model.PedidoJsonObj;
+import br.com.gaudium.entrega.view.MapsActivityView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class OfertaPedidoWebService {
-	String URL = "http://3.95.2.52/ps/ofertaPedido.php";
+//	String URL = "http://3.95.2.52/ps/ofertaPedido.php";
+	MapsActivityView view;
+
+	public OfertaPedidoWebService(MapsActivityView view){
+		this.view = view;
+	}
 
 	public void obterPedido(Context ctx, OfertaPedidoCallback callback){
 		//TODO: Trocar pedido hard-coded por chamada ao backend
 		PedidoJsonObj.PedidoObj p = new PedidoJsonObj.PedidoObj();
-		p.setLat_coleta(-22.910112);
-		p.setLng_coleta(-43.173913);
-		p.setEndereco_coleta("Av. Graça Aranha, 26 - Centro");
+		p.setLat_coleta(p.getLat_coleta());
+		p.setLng_coleta(p.getLng_coleta());
+		p.setEndereco_coleta(p.getEndereco_coleta());
 
-		PedidoJsonObj.EntregaObj[] destino = new PedidoJsonObj.EntregaObj[3];
-		destino[0] = new PedidoJsonObj.EntregaObj("#1", -22.910852, -43.185296);
-		destino[1] = new PedidoJsonObj.EntregaObj("#2", -22.903223, -43.103135);
-		destino[2] = new PedidoJsonObj.EntregaObj("#3", -22.955188, -43.193763);
+		List<PedidoJsonObj.EntregaObj>  lstDestino = new ArrayList<>();
+		PedidoJsonObj.EntregaObj[] destino = new PedidoJsonObj.EntregaObj[0];
+		if(p.getEntregas() != null){
+			for(PedidoJsonObj.EntregaObj obj: p.getEntregas()){
+				lstDestino.add(obj);
+			}
+			destino = (PedidoJsonObj.EntregaObj[]) lstDestino.toArray();
+
+		}
 		p.setEntrega(destino);
 
-		callback.run(p);
+		Call<PedidoJsonObj> call = new RetrofitConfig(view, ctx).getService().call();
+		call.enqueue(new Callback<PedidoJsonObj>() {
+			@Override
+			public void onResponse(Call<PedidoJsonObj> call, Response<PedidoJsonObj> response) {
+				callback.run(response.body().getResponse());
+			}
 
-		/* TODO: Trocar código abaixo por uma requisição GET para a URL do método
-		WebRequest wr = new WebRequest("GET");
-		wr.setUrl(URL);
-		wr.setOnCompleteWebRequest(response -> {
-			PedidoJsonObj responseObj = (PedidoJsonObj) WebRequest.parse(response);
-			if(responseObj.isSuccess()){
-				callback.run(responseObj.getResponse());
-			} else{
-				Toast.makeText(ctx, "Erro ao obter pedido", Toast.LENGTH_SHORT).show();
+			@Override
+			public void onFailure(Call<PedidoJsonObj> call, Throwable t) {
+				view.showToast("Erro ao obter pedido: "+t.getMessage());
 			}
 		});
-
-		 */
 
 	}
 
