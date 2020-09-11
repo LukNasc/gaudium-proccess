@@ -21,6 +21,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import br.com.gaudium.entrega.model.DebugLocationRetriever;
 import br.com.gaudium.entrega.model.EntregadorObj;
@@ -34,7 +36,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private LinearLayout layMenuOferta, layMenuColeta, layMenuEntrega;
     private RelativeLayout layColetaButton, layEntregaButton, layMenu;
-    private TextView txtEnderecoOferta, txtEnderecoColeta, txtEntrega, txtEntregas, txtEnderecoEntrega;
+    private TextView txtEnderecoOferta, txtEnderecoColeta, txtEntrega, txtEntregas, txtEnderecoEntrega, txtTimer;
     private Button btnRejeitar, btnAceitar, btnColetar, btnEntregar, btnDebugAction, btnGoProfile;
 
     Handler handler;
@@ -53,6 +55,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     //Loca de entrega atual
     Marker currentDellivey;
+
+//    private int timerAccept = 20;
+
+//    private Timer timer = new Timer();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +84,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         btnRejeitar.setOnClickListener(view -> onReject());
         btnAceitar = findViewById(R.id.btnAceitar);
         btnAceitar.setOnClickListener(view -> onAccept());
+        txtTimer = findViewById(R.id.txtTimer);
 
         // Menu de Coleta
         layMenuColeta = findViewById(R.id.layMenuColeta);
@@ -178,6 +185,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private void onReject() {
         entregadorObj.setStatus(StatusEntregadorEnum.DISPONIVEL);
         Util.playPop(this);
+//        timer.cancel();
         updateScreen();
     }
 
@@ -327,6 +335,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 entregadorObj.setStatus(StatusEntregadorEnum.DECIDINDO);
                 Util.tocarSomVibrar(MapsActivity.this);
+
+//                timerAccept = 20;
+              /*  timer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        runOnUiThread(() -> {
+                            timerAccept = timerAccept - 1;
+                            txtTimer.setText(timerAccept +"s") ;
+                            if(timerAccept == 0){
+                                entregadorObj.setStatus(StatusEntregadorEnum.DISPONIVEL);
+                                timer.purge();
+                                updateScreen();
+                                return;
+                            }
+                        });
+
+                    }
+                },0,1000);*/
+
 
                 //Exibir locais de entrega
                 if (mMap == null) return;
