@@ -22,8 +22,8 @@
 
         <!--  Menu para o momento DECIDINDO  -->
         <LinearLayout
-            style="@style/MenuPedido"
             android:id="@+id/layMenuOferta"
+            style="@style/MenuPedido"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#FFFFFF"
@@ -31,48 +31,55 @@
             android:visibility="gone">
 
             <TextView
+                android:id="@+id/txtEntregas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Entregas: 0" />
+
+            <TextView
                 android:id="@+id/txtLocalColetaLabel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="12sp"
+                android:text="@string/label_endereco_coleta"
                 android:textColor="#3A3A3A"
-                android:text="@string/label_endereco_coleta"/>
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/txtEnderecoOferta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:textColor="#222"
                 android:layout_marginBottom="12dp"
-                tools:text="Rua da Assembéia, 10 - Centro"/>
+                android:textColor="#222"
+                android:textSize="16sp"
+                tools:text="Rua da Assembéia, 10 - Centro" />
 
             <!-- Espaço com botões do menu do momento DECIDINDO -->
             <RelativeLayout
-                style="MenuLayButton"
                 android:id="@+id/layOpcoes"
+                style="MenuLayButton"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:visibility="visible">
 
                 <Button
                     android:id="@+id/btnRejeitar"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
                     android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:backgroundTint="#E95252"
-                    android:textColor="#FFFFFF"
-                    android:text="@string/button_oferta_rejeitar" />
+                    android:text="@string/button_oferta_rejeitar"
+                    android:textColor="#FFFFFF" />
 
                 <Button
                     android:id="@+id/btnAceitar"
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
                     android:backgroundTint="#2DC935"
-                    android:textColor="#FFFFFF"
-                    android:text="@string/button_oferta_aceitar"/>
+                    android:text="@string/button_oferta_aceitar"
+                    android:textColor="#FFFFFF" />
             </RelativeLayout>
 
         </LinearLayout>

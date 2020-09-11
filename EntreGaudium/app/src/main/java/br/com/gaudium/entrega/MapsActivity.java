@@ -30,7 +30,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     private LinearLayout layMenuOferta, layMenuColeta, layMenuEntrega;
     private RelativeLayout layColetaButton, layEntregaButton, layMenu;
-    private TextView txtEnderecoOferta, txtEnderecoColeta, txtEntrega;
+    private TextView txtEnderecoOferta, txtEnderecoColeta, txtEntrega, txtEntregas;
     private Button btnRejeitar, btnAceitar, btnColetar, btnEntregar, btnDebugAction;
 
     Handler handler;
@@ -56,6 +56,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         // Menu de Oferta
         layMenuOferta = findViewById(R.id.layMenuOferta);
         txtEnderecoOferta = findViewById(R.id.txtEnderecoOferta);
+        txtEntregas = findViewById(R.id.txtEntregas);
         btnRejeitar = findViewById(R.id.btnRejeitar);
         btnRejeitar.setOnClickListener(view -> onReject());
         btnAceitar = findViewById(R.id.btnAceitar);
@@ -200,6 +201,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void showMenuOferta(boolean visible){
         layMenuOferta.setVisibility(visible?View.VISIBLE:View.GONE);
         if (entregadorObj.getPedido() != null) {
+            txtEntregas.setText("Entregas: "+entregadorObj.getPedido().getEntregas().length);
             txtEnderecoOferta.setText(entregadorObj.getPedido().getEndereco_coleta());
         }
     }
